@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+
+        <h3 class="card-title">Folders Registrados </h3>
+        <br>
+        <button [routerLink]="['/registrarfolders', 'nuevo']" class="btn btn-danger">
+          <i class="fa fa-save"></i> Crear Nuevo Folder
+        </button>
+
+        <div>
+          <!-- Bases -->
+          <table class="table" >
+            <thead>
+
+            </thead>
+            <tbody *ngFor='let folder of folders | keyvalue'>
+              <tr *ngIf="folder.key == 0">
+                <th>Id</th>
+                <th>Nombre Carpeta</th>
+                <th>Subcarpeta</th>
+                <th>Usuario Asignado</th>
+              </tr>
+              <tr>
+                <td>{{folder.value.id}}</td>
+                <td>{{folder.value.nombrecarpeta}}</td>
+                <td>{{folder.value.id_subcarpeta}}</td>
+                <td>{{folder.value.user_id}}</td>
+                <td>
+                  <button [routerLink]="['/registrarfolders', folder.id]" class="btn btn-primary">
+                    <i class="fa fa-save"></i>
+                  </button>
+
+                  <button (click)="eliminarFolder(folder)" class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <ng-container
+                [ngTemplateOutlet]="simpleLink"
+                [ngTemplateOutletContext]="{hijas:folder.value.folders}">
+              </ng-container>
+
+            </tbody>
+          </table>
+        </div>
+
+        <ng-template #simpleLink let-subfolder='hijas'>
+          <tr>
+            <td colspan="6">
+                <table class="table ml-3" *ngFor='let folder of subfolder'>
+                  <thead>
+                    <tr>
+                      <td>{{folder.id}}</td>
+                      <td>{{folder.nombrecarpeta}}</td>
+                      <td>{{folder.id_subcarpeta}}</td>
+                      <td>{{folder.user_id}}</td>
+                      <td>
+                        <button [routerLink]="['/registrarfolders', folder.id]" class="btn btn-primary">
+                          <i class="fa fa-save"></i>
+                        </button>
+
+                        <button (click)="eliminarFolder(folder)" class="btn btn-danger">
+                          <i class="fa fa-trash-o"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <ng-container [ngTemplateOutlet]="simpleLink" [ngTemplateOutletContext]="{hijas:folder.folders}">
+                      </ng-container>
+                  </tbody></table>
+            </td>
+          </tr>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>

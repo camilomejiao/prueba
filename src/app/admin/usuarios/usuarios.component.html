@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+
+        <h3 class="card-title">Usuarios Registrados </h3>
+
+        <br>
+
+        <button [routerLink]="['/registrarUsuarios', 'nuevo']" class="btn btn-danger">
+          <i class="fa fa-save"></i>  Crear Nuevo Usuario
+        </button>
+
+        <table class="table table-hover" >
+          <thead>
+            <tr>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>TipoIdentificación</th>
+              <th>NumeroIdentificación</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usuario of usuarios">
+              <td>{{usuario.name}}</td>
+              <td>{{usuario.lastname}}</td>
+              <td>{{usuario.tipoidentificacion}}</td>
+              <td>{{usuario.numeroidentificacion}}</td>
+              <td>{{usuario.email}}</td>
+              <td>
+                <button [routerLink]="['/registrarUsuarios', usuario.id]" class="btn btn-primary" >
+                  <i class="fa fa-save"></i>
+                </button>
+
+                <button (click)="eliminarUsuario(usuario)" class="btn btn-danger">
+                  <i class="fa fa-trash-o"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
